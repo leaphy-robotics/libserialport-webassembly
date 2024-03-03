@@ -21,95 +21,13 @@
 #ifndef LIBSERIALPORT_LIBSERIALPORT_INTERNAL_H
 #define LIBSERIALPORT_LIBSERIALPORT_INTERNAL_H
 
-/* These MSVC-specific defines must appear before other headers.*/
-#ifdef _MSC_VER
-#define _CRT_NONSTDC_NO_DEPRECATE
-#define _CRT_SECURE_NO_WARNINGS
-#endif
-
-/* These feature test macros must appear before other headers.*/
-#if defined(__linux__) || defined(__CYGWIN__)
-/* For timeradd, timersub, timercmp, realpath. */
-#define _BSD_SOURCE 1 /* for glibc < 2.19 */
-#define _DEFAULT_SOURCE 1 /* for glibc >= 2.20 */
-/* For clock_gettime and associated types. */
-#define _POSIX_C_SOURCE 199309L
-#endif
-
-#ifdef LIBSERIALPORT_ATBUILD
-/* If building with autoconf, include the generated config.h. */
-#include <config.h>
-#endif
-
-#ifdef LIBSERIALPORT_MSBUILD
-/* If building with MS tools, define necessary things that
-   would otherwise appear in config.h. */
-#define SP_PRIV
-#endif
-
+/* Macro preceding private functions */
+#include <bits/alltypes.h>
+#include <stdbool.h>
 #include "libserialport.h"
 
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdbool.h>
-#include <stdint.h>
-#ifdef _WIN32
-#include <windows.h>
-#include <tchar.h>
-#include <setupapi.h>
-#include <cfgmgr32.h>
-#undef DEFINE_GUID
-#define DEFINE_GUID(name,l,w1,w2,b1,b2,b3,b4,b5,b6,b7,b8) \
-	static const GUID name = { l,w1,w2,{ b1,b2,b3,b4,b5,b6,b7,b8 } }
-#include <usbioctl.h>
-#include <usbiodef.h>
-/* The largest size that can be passed to WriteFile() safely
- * on any architecture. This arises from the expression:
- * PAGE_SIZE * (65535 - sizeof(MDL)) / sizeof(ULONG_PTR)
- * and this worst-case value is found on x64. */
-#define WRITEFILE_MAX_SIZE 33525760
-#else
-#include <limits.h>
-#include <termios.h>
-#include <sys/ioctl.h>
-#include <sys/time.h>
-#include <time.h>
-#include <poll.h>
-#include <unistd.h>
-#ifdef HAVE_SYS_FILE_H
-#include <sys/file.h>
-#endif
-#endif
-#ifdef __APPLE__
-#include <CoreFoundation/CoreFoundation.h>
-#include <IOKit/IOKitLib.h>
-#include <IOKit/serial/IOSerialKeys.h>
-#include <IOKit/serial/ioss.h>
-#include <sys/syslimits.h>
-#include <mach/mach_time.h>
-#if MAC_OS_X_VERSION_MAX_ALLOWED < 120000 /* Before macOS 12 */
-#define kIOMainPortDefault kIOMasterPortDefault
-#endif
-#endif
-#ifdef __linux__
-#include <dirent.h>
-/* Android only has linux/serial.h from platform 21 onwards. */
-#if !(defined(__ANDROID__) && (__ANDROID_API__ < 21))
-#include <linux/serial.h>
-#endif
-#include "linux_termios.h"
+#define SP_PRIV __attribute__((visibility("hidden")))
 
-/* TCGETX/TCSETX is not available everywhere. */
-#if defined(TCGETX) && defined(TCSETX) && defined(HAVE_STRUCT_TERMIOX)
-#define USE_TERMIOX
-#endif
-#endif
 
 /* TIOCINQ/TIOCOUTQ is not available everywhere. */
 #if !defined(TIOCINQ) && defined(FIONREAD)
@@ -175,37 +93,15 @@ struct sp_port_config {
 	enum sp_xonxoff xon_xoff;
 };
 
-struct port_data {
-#ifdef _WIN32
-	DCB dcb;
-#else
-	struct termios term;
-	int controlbits;
-	int termiox_supported;
-	int rts_flow;
-	int cts_flow;
-	int dtr_flow;
-	int dsr_flow;
-#endif
-};
 
-#ifdef _WIN32
-typedef HANDLE event_handle;
-#else
 typedef int event_handle;
-#endif
 
 /* Standard baud rates. */
-#ifdef _WIN32
-#define BAUD_TYPE DWORD
-#define BAUD(n) {CBR_##n, n}
-#else
 #define BAUD_TYPE speed_t
 #define BAUD(n) {B##n, n}
-#endif
 
 struct std_baudrate {
-	BAUD_TYPE index;
+	int index;
 	int value;
 };
 
@@ -282,12 +178,13 @@ SP_PRIV enum sp_return list_ports(struct sp_port ***list);
 
 /* Timing abstraction */
 
+struct timeval {
+    long tv_sec;
+    long tv_usec;
+};
+
 struct time {
-#ifdef _WIN32
-	int64_t ticks;
-#else
-	struct timeval tv;
-#endif
+	struct timeval tv
 };
 
 struct timeout {

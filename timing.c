@@ -21,91 +21,40 @@
 
 SP_PRIV void time_get(struct time *time)
 {
-#ifdef _WIN32
-	LARGE_INTEGER count;
-	QueryPerformanceCounter(&count);
-	time->ticks = count.QuadPart;
-#elif defined(HAVE_CLOCK_GETTIME)
-	struct timespec ts;
-	if (clock_gettime(CLOCK_MONOTONIC, &ts) == -1)
-		clock_gettime(CLOCK_REALTIME, &ts);
-	time->tv.tv_sec = ts.tv_sec;
-	time->tv.tv_usec = ts.tv_nsec / 1000;
-#elif defined(__APPLE__)
-	mach_timebase_info_data_t info;
-	mach_timebase_info(&info);
-	uint64_t ticks = mach_absolute_time();
-	uint64_t ns = (ticks * info.numer) / info.denom;
-	time->tv.tv_sec = ns / 1000000000;
-	time->tv.tv_usec = (ns % 1000000000) / 1000;
-#else
-	gettimeofday(&time->tv, NULL);
-#endif
+
 }
 
 SP_PRIV void time_set_ms(struct time *time, unsigned int ms)
 {
-#ifdef _WIN32
-	LARGE_INTEGER frequency;
-	QueryPerformanceFrequency(&frequency);
-	time->ticks = ms * (frequency.QuadPart / 1000);
-#else
 	time->tv.tv_sec = ms / 1000;
 	time->tv.tv_usec = (ms % 1000) * 1000;
-#endif
 }
 
 SP_PRIV void time_add(const struct time *a,
 		const struct time *b, struct time *result)
 {
-#ifdef _WIN32
-	result->ticks = a->ticks + b->ticks;
-#else
-	timeradd(&a->tv, &b->tv, &result->tv);
-#endif
+
 }
 
 SP_PRIV void time_sub(const struct time *a,
 		const struct time *b, struct time *result)
 {
-#ifdef _WIN32
-	result->ticks = a->ticks - b->ticks;
-#else
-	timersub(&a->tv, &b->tv, &result->tv);
-#endif
+
 }
 
 SP_PRIV bool time_greater(const struct time *a, const struct time *b)
 {
-#ifdef _WIN32
-	return (a->ticks > b->ticks);
-#else
-	return timercmp(&a->tv, &b->tv, >);
-#endif
+
 }
 
 SP_PRIV void time_as_timeval(const struct time *time, struct timeval *tv)
 {
-#ifdef _WIN32
-	LARGE_INTEGER frequency;
-	QueryPerformanceFrequency(&frequency);
-	tv->tv_sec = (long) (time->ticks / frequency.QuadPart);
-	tv->tv_usec = (long) ((time->ticks % frequency.QuadPart) /
-		(frequency.QuadPart / 1000000));
-#else
 	*tv = time->tv;
-#endif
 }
 
 SP_PRIV unsigned int time_as_ms(const struct time *time)
 {
-#ifdef _WIN32
-	LARGE_INTEGER frequency;
-	QueryPerformanceFrequency(&frequency);
-	return (unsigned int) (time->ticks / (frequency.QuadPart / 1000));
-#else
 	return time->tv.tv_sec * 1000 + time->tv.tv_usec / 1000;
-#endif
 }
 
 SP_PRIV void timeout_start(struct timeout *timeout, unsigned int timeout_ms)
