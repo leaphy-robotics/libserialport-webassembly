@@ -1,0 +1,2 @@
+/home/koen/Documents/emsdk/upstream/emscripten/emar qc libserialport.a CMakeFiles/serialport.dir/serialport.c.o CMakeFiles/serialport.dir/timing.c.o
+/home/koen/Documents/emsdk/upstream/emscripten/emranlib libserialport.a

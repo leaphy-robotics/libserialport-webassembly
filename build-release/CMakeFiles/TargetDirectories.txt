@@ -1,0 +1,3 @@
+/media/koen/PortableSSD/GitHub/libserialport-webassembly/build-release/CMakeFiles/serialport.dir
+/media/koen/PortableSSD/GitHub/libserialport-webassembly/build-release/CMakeFiles/edit_cache.dir
+/media/koen/PortableSSD/GitHub/libserialport-webassembly/build-release/CMakeFiles/rebuild_cache.dir

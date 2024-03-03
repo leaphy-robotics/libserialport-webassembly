@@ -1,0 +1,27 @@
+CMakeFiles/serialport.dir/serialport.c.o: \
+  /media/koen/PortableSSD/GitHub/libserialport-webassembly/serialport.c \
+  /media/koen/PortableSSD/GitHub/libserialport-webassembly/libserialport_internal.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/bits/alltypes.h \
+  /home/koen/Documents/emsdk/upstream/lib/clang/19/include/stdbool.h \
+  /media/koen/PortableSSD/GitHub/libserialport-webassembly/libserialport.h \
+  /home/koen/Documents/emsdk/upstream/lib/clang/19/include/stddef.h \
+  /home/koen/Documents/emsdk/upstream/lib/clang/19/include/__stddef_ptrdiff_t.h \
+  /home/koen/Documents/emsdk/upstream/lib/clang/19/include/__stddef_size_t.h \
+  /home/koen/Documents/emsdk/upstream/lib/clang/19/include/__stddef_wchar_t.h \
+  /home/koen/Documents/emsdk/upstream/lib/clang/19/include/__stddef_null.h \
+  /home/koen/Documents/emsdk/upstream/lib/clang/19/include/__stddef_max_align_t.h \
+  /home/koen/Documents/emsdk/upstream/lib/clang/19/include/__stddef_offsetof.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/termios.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/features.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/bits/termios.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/bits/fcntl.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/fcntl.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/wasi/api.h \
+  /home/koen/Documents/emsdk/upstream/lib/clang/19/include/stdint.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/stdint.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/bits/stdint.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/compat/malloc.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/malloc.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/compat/string.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/string.h \
+  /home/koen/Documents/emsdk/upstream/emscripten/cache/sysroot/include/strings.h

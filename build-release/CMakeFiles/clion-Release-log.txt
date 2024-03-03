@@ -1,0 +1,4 @@
+/home/koen/Jetbrains/clion/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=/home/koen/Documents/emsdk/upstream/emscripten/emcc -DCMAKE_CXX_COMPILER=/home/koen/Documents/emsdk/upstream/emscripten/em++ -DCMAKE_CROSSCOMPILING_EMULATOR=/usr/bin/node -DCMAKE_TOOLCHAIN_FILE=/home/koen/Documents/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -S /media/koen/PortableSSD/GitHub/libserialport-webassembly -B /media/koen/PortableSSD/GitHub/libserialport-webassembly/build-release
+-- Configuring done (0.3s)
+-- Generating done (0.0s)
+-- Build files have been written to: /media/koen/PortableSSD/GitHub/libserialport-webassembly/build-release
